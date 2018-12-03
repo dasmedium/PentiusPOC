@@ -1,1 +1,154 @@
-<a>Hello</a>
+<div class="container">
+  <legend>Start Here</legend>
+  <h4 *ngIf="(customer$.firstName | async) as name">
+    {{ name }}'s GUID: {{ tracking_guid$ | async }}
+  </h4>
+  <form
+    #customerForm="ngForm"
+    (ngSubmit)="formSubmitted(customerForm.value)"
+    name="form"
+    id="customerForm"
+    novalidate="novalidate"
+  >
+    <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
+      <label class="visible-xs">Firstname:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="firstName"
+        id="firstname"
+        #firstName="ngModel"
+        placeholder="First name"
+        required
+        [ngModel]="customer$?.firstName"
+        (ngModelChange)="(customer$.firstName)"
+      />
+      <div *ngIf="(errors$ | async) as error" class="has-error">
+        <div>{{ error.error.firstName }}</div>
+        <div #invisible></div>
+      </div>
+    </div>
+
+    <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
+      <label class="visible-xs">Lastname:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="lastName"
+        id="lastName"
+        #lastName="ngModel"
+        placeholder="Last name"
+        [ngModel]="customer$?.lastName"
+        (ngModelChange)="(customer$?.lastName)"
+      />
+      <div
+        class="has-error"
+        *ngIf="(errors$ | async) as error; else: invisible"
+      >
+        <div>{{ error.error.lastName }}</div>
+        <div #invisible></div>
+      </div>
+    </div>
+    <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
+      <label class="visible-xs">Email:</label>
+      <input
+        type="text"
+        name="email"
+        class="form-control"
+        id="email"
+        #email="ngModel"
+        placeholder="Email"
+        [ngModel]="customer?.email"
+        (ngModelChange)="(customer$?.email)"
+      />
+      <div
+        *ngIf="(errors$ | async) as error; else: invisible"
+        class="has-error"
+      >
+        <div>{{ error.error.email }}</div>
+        <div #invisible></div>
+      </div>
+    </div>
+    <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
+      <label class="visible-xs">Zip Code:</label>
+      <input
+        type="text"
+        name="zipCode"
+        class="form-control"
+        id="zipCode"
+        #zipCode="ngModel"
+        placeholder="Zip Code"
+        [ngModel]="customer$?.zipCode"
+        (ngModelChange)="(customer$?.zipCode)"
+      />
+      <div
+        *ngIf="(errors$ | async) as error; else: invisible"
+        class="has-error"
+      >
+        <div>{{ error.error.zipCode }}</div>
+        <div #invisible></div>
+      </div>
+    </div>
+
+    <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
+      <label class="visible-xs">Password:</label>
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        id="password"
+        #password="ngModel"
+        placeholder="Password"
+        [ngModel]="customer$?.password"
+        (ngModelChange)="(customer$?.password)"
+      />
+      <div
+        *ngIf="(errors$ | async) as error; else: invisible"
+        class="has-error"
+      >
+        <div>{{ error.error.password }}</div>
+        <div #invisible></div>
+      </div>
+    </div>
+
+    <!--
+      The code below is some sort of malformed JSON, which prevents angular from doing its HTTP thing. Figuring out a cleverer way of sending the guid. Commented out in favor of getting error messages from api
+    -->
+    <!--
+      <input
+        type="text"
+        id="guid"
+        name="tracking_guid"
+        [(ngModel)]="tracking_guid$"
+        value="{{tracking_guid$}}"
+        style="display: none;"
+      />
+    -->
+
+    <input
+      type="hidden"
+      id="fs_authToMarket"
+      name="fs_authToMarket"
+      value="1"
+    />
+    <div class="form-group">
+      <label for="authtomarket" class="authtomarket">
+        <input
+          type="checkbox"
+          id="authtomarket"
+          name="authtomarket"
+          checked=""
+          onclick="document.getElementById(&#39;fs_authToMarket&#39;).value = (this.checked) ? 1 : 0;"
+        />
+        Yes, please send special offers from CheckFreeScore.com and partners to
+        my email.
+      </label>
+    </div>
+    <div class="form-group">
+      <button class="scores" type="submit">
+        Your Score - Now
+        <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+      </button>
+    </div>
+  </form>
+</div>

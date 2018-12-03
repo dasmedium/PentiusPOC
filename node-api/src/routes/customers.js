@@ -55,41 +55,36 @@ router.get("/:Id", async function(req, res, next) {
 router.post("/add", async function(req, res, next) {
   const sqlReq = await request();
   const { firstName, lastName, email, password, guid } = req.body;
-  // Simple error boundry, checks for valid email addresses, and string etc. but not for duplicates. So I implemented a constraint in the SQL table. If all checks pass but we still get an error from the SQL server, we can show a "Bad data" type of message (for now...)
+
   const { errors, isValid } = validateCustomerInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
   }
+  try {
+    const checkEmail = `select * from credmo.dbo.customer where email='${email}'`;
+    checked = await sqlReq.query(checkEmail);
+    if (checked >= 0) throw Error("Email in use");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 
-  // try {
-  //   const checkEmail = `select email from customer having count(*)>1`;
-  //   // SQL when "selecting * from customers where email ${email}", we always get multi-part identifier can not be bound. Other types of queries are no successfull either.
-
-  //   let checkedEmail = await sqlReq.query(checkEmail);
-
-  //   if (
-  //     checkedEmail.recordset.length > 0 &&
-  //     checkedEmail.recordset[0].email > 0
-  //   ) {
-  //     return res.status(400).json({ msg: "Email already registered" });
-  //   }
-  // } catch (err) {
-  //   return res.status(400).json(err);
-  // }
   const addCustomer = `
       INSERT INTO credmo.dbo.customer(first_name, last_name, email, password, tracking_guid)
       VALUES('${firstName}', '${lastName}', '${email}', '${password}', '${guid}');
-      SELECT SCOPE_IDENTITY() AS id;`;
+      SELECT SCOPE_IDENTITY() AS customer;`;
 
   try {
     let newCustomer = await sqlReq.query(addCustomer);
     return res.send(newCustomer);
   } catch (err) {
-    if ((err.number = 2627)) {
-      return res.status(400).json({ msg: "Credentials already in use" });
-    } else {
+    if (err.originalError.info.number === 2627) {
+      res.status(400).json({ msg: "Credentials already in use" });
+    } else if (err.originalError.info.number === 8169) {
+      res.status(400).json({ msg: "Guid is required" });
     }
-    return res.send("Bad data");
+    {
+    }
+    return res.status(400).json("Bad data");
   }
 });
 

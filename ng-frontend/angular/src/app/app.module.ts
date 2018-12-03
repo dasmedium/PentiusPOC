@@ -5,7 +5,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
-import { InitEffects } from "../effects/root.effects";
+import { InitEffects, RegisterEffects } from "../effects/root.effects";
 import { reducer } from "../reducers/auth.reducer";
 import { AppComponent } from "./app.component";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -32,7 +32,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    EffectsModule.forRoot([InitEffects]),
+    EffectsModule.forRoot([InitEffects, RegisterEffects]),
     StoreModule.forRoot({ auth: reducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25 // Retains last 25 states

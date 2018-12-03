@@ -1,5 +1,6 @@
 import { Action } from "@ngrx/store";
 import { Customer } from "../customer/models/customer";
+import { ApiService } from "../app/services/api.service";
 import { HttpClient } from "@angular/common/http";
 import { async } from "@angular/core/testing";
 export enum AuthActionTypes {
@@ -9,15 +10,6 @@ export enum AuthActionTypes {
   GetGuid = "[Auth] Get Guid",
   GetGuidSuccess = "[Auth] Get Guid Success",
   GetGuidError = "[Auth] Get Guid Error"
-}
-export class Register implements Action {
-  readonly type = AuthActionTypes.Register;
-  constructor(public payload: Customer) {}
-}
-export class RegisterFailure implements Action {
-  readonly type = AuthActionTypes.RegisterFailure;
-
-  constructor(public payload: { error: any }) {}
 }
 
 export class GetGuid implements Action {
@@ -34,9 +26,21 @@ export class GetGuidError implements Action {
   constructor(public payload: { error: object }) {}
 }
 
+export class Register implements Action {
+  readonly type = AuthActionTypes.Register;
+
+  constructor(public payload: ApiService<Customer>) {}
+}
+
 export class RegisterRedirect implements Action {
   readonly type = AuthActionTypes.RegisterRedirect;
   constructor(public payload: { customer: Customer }) {}
+}
+
+export class RegisterFailure implements Action {
+  readonly type = AuthActionTypes.RegisterFailure;
+
+  constructor(public payload: { error: any }) {}
 }
 
 export type AuthActionsUnion =

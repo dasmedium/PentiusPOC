@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { InitActions } from "../actions/index";
 import { Store, select, State } from "@ngrx/store";
 import { Router } from "@angular/router";

@@ -5,6 +5,8 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Observable, of } from "rxjs";
 import { switchMap } from "rxjs/operators";
 import { catchError, map, mergeMap, mapTo } from "rxjs/operators";
+import { AuthActions } from "src/actions";
+import { AuthActionTypes } from "src/actions/auth.actions";
 
 // import { AuthActions } from "../actions/index";
 // const { GetGuid, GetGuidError, GetGuidSuccess } = AuthActions;
@@ -24,16 +26,19 @@ export class InitEffects {
 
   constructor(private http: HttpClient, private actions$: Actions) {}
 }
+// https://github.com/ngrx/platform/issues/31#issuecomment-308056949
 @Injectable()
 export class RegisterEffects {
   @Effect()
-  getGuid: Observable<Action> = this.actions$.pipe(
+  sendRegister: Observable<Action> = this.actions$.pipe(
     ofType("[Auth] Register"),
-    switchMap(payload =>
-      this.http.post("/api/customers/add", payload).pipe(
-        map(res => ({ type: "[Auth] Register Redirect", payload: res })),
+    mergeMap((action: AuthActions.Register) =>
+      this.http.post("/api/customers/add", action.payload).pipe(
+        map(res => ({ type: AuthActionTypes.RegisterRedirect, payload: res })),
 
-        catchError(err => of({ type: "[Auth] Register Failure", payload: err }))
+        catchError(err =>
+          of({ type: AuthActionTypes.RegisterFailure, payload: err })
+        )
       )
     )
   );

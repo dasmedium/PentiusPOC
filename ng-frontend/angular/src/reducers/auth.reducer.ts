@@ -4,13 +4,13 @@ import { Customer } from "../customer/models/customer";
 export interface State {
   customer: Customer | null;
   tracking_guid: string;
-  error: object;
+  errors: object;
 }
 
 export const initialState: State = {
   customer: null,
   tracking_guid: null,
-  error: null
+  errors: null
 };
 
 export function reducer(
@@ -32,7 +32,7 @@ export function reducer(
     case AuthActions.AuthActionTypes.GetGuidError: {
       return {
         ...state,
-        error: action.payload
+        errors: action.payload
       };
     }
     case AuthActions.AuthActionTypes.RegisterRedirect: {
@@ -55,7 +55,5 @@ export function reducer(
 }
 
 export const getTrackingGuid = (state: State) => state.tracking_guid;
-export const getErrors = (state: State) => state.error;
+export const getErrors = (state: State) => state.errors;
 export const getCustomer = (state: State) => state.customer;
-
-// function handleUserInfo(state: State, action:)

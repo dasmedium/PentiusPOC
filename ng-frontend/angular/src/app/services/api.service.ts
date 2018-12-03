@@ -1,18 +1,19 @@
 import { Injectable } from "@angular/core";
-import { Customer } from "src/customer/models/customer";
-import { Observable, of } from "rxjs";
+import { Observable, of, from } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
+import * as fromStore from "../../reducers/index";
+import { Store } from "@ngrx/store";
+
 @Injectable({
   providedIn: "root"
 })
-export class ApiService {
-  addCustomer(customer: Customer): Observable<any> {
+export class ApiService<Customer> {
+  addCustomer(customer: Customer): Observable<Customer> {
+    console.log("called");
     return this.http
-      .post<Customer>("/customers/add", customer)
-      .pipe(
-        catchError(err => of({ type: "[Auth] Register Failure", payload: err }))
-      );
+      .post<Customer>("/api/customers/add", customer)
+      .pipe(catchError(err => of(err)));
   }
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private store: Store<fromStore.State>) {}
 }
