@@ -9,7 +9,10 @@ export enum AuthActionTypes {
   RegisterRedirect = "[Auth] Register Redirect",
   GetGuid = "[Auth] Get Guid",
   GetGuidSuccess = "[Auth] Get Guid Success",
-  GetGuidError = "[Auth] Get Guid Error"
+  GetGuidError = "[Auth] Get Guid Error",
+  GetCustomer = "[Auth] Get Customer",
+  GetCustomerSuccess = "[Auth] Get Customer Success",
+  GetCustomerError = "[Auth] Get Customer Error"
 }
 
 export class GetGuid implements Action {
@@ -18,7 +21,7 @@ export class GetGuid implements Action {
 export class GetGuidSuccess implements Action {
   readonly type = AuthActionTypes.GetGuidSuccess;
 
-  constructor(public payload: { tracking_guid: number }) {}
+  constructor(public payload: { tracking_guid: string }) {}
 }
 export class GetGuidError implements Action {
   readonly type = AuthActionTypes.GetGuidError;
@@ -34,7 +37,7 @@ export class Register implements Action {
 
 export class RegisterRedirect implements Action {
   readonly type = AuthActionTypes.RegisterRedirect;
-  constructor(public payload: { customer: Customer }) {}
+  constructor(public payload: { id: number }) {}
 }
 
 export class RegisterFailure implements Action {
@@ -43,10 +46,28 @@ export class RegisterFailure implements Action {
   constructor(public payload: { error: any }) {}
 }
 
+export class GetCustomer implements Action {
+  readonly type = AuthActionTypes.GetCustomer;
+  constructor(public payload: { id: number }) {}
+}
+export class GetCustomerSuccess implements Action {
+  readonly type = AuthActionTypes.GetCustomerSuccess;
+
+  constructor(public payload: { customer: Customer }) {}
+}
+export class GetCustomerError implements Action {
+  readonly type = AuthActionTypes.GetCustomerError;
+
+  constructor(public payload: { error: object }) {}
+}
+
 export type AuthActionsUnion =
   | Register
   | RegisterFailure
   | RegisterRedirect
   | GetGuid
   | GetGuidSuccess
-  | GetGuidError;
+  | GetGuidError
+  | GetCustomer
+  | GetCustomerSuccess
+  | GetCustomerError;

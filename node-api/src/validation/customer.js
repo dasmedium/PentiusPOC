@@ -3,34 +3,34 @@ const isEmpty = require("./isEmpty");
 
 module.exports = function validateCustomerInput(data) {
   let errors = {};
-  data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
-  data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
+  data.first_name = !isEmpty(data.first_name) ? data.first_name : "";
+  data.last_name = !isEmpty(data.last_name) ? data.last_name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
   data.zipCode = !isEmpty(data.zipCode) ? data.zipCode : "";
 
   // firstName
   const nameRegEx = /[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*/;
-  if (!Validator.isLength(data.firstName, { min: 2, max: 50 })) {
-    errors.firstName = "First name must be between 2 and 50 characters";
+  if (!Validator.isLength(data.first_name, { min: 2, max: 50 })) {
+    errors.first_name = "First name must be between 2 and 50 characters";
   }
-  if (!nameRegEx.test(data.firstName)) {
-    errors.firstName = "Invalid characters in first name";
+  if (!nameRegEx.test(data.first_name)) {
+    errors.first_name = "Invalid characters in first name";
   }
-  if (Validator.isEmpty(data.firstName)) {
-    errors.firstName = "First name is required";
+  if (Validator.isEmpty(data.first_name)) {
+    errors.first_name = "First name is required";
   }
 
   // lastName
-  const lastNameRegEx = /[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*/;
-  if (!Validator.isLength(data.lastName, { min: 2, max: 50 })) {
-    errors.lastName = "Last name must be between 2 and 50 characters";
+  const last_nameRegEx = /[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*/;
+  if (!Validator.isLength(data.last_name, { min: 2, max: 50 })) {
+    errors.last_name = "Last name must be between 2 and 50 characters";
   }
-  if (!lastNameRegEx.test(data.lastName)) {
-    errors.lastName = "Invalid characters in last name";
+  if (!last_nameRegEx.test(data.last_name)) {
+    errors.last_name = "Invalid characters in last name";
   }
-  if (Validator.isEmpty(data.lastName)) {
-    errors.lastName = "Last name is required";
+  if (Validator.isEmpty(data.last_name)) {
+    errors.last_name = "Last name is required";
   }
 
   // email

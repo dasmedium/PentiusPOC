@@ -26,25 +26,53 @@ export function reducer(
     case AuthActions.AuthActionTypes.GetGuidSuccess: {
       return {
         ...state,
-        tracking_guid: action.payload
+        tracking_guid: action.payload,
+        customer: {
+          tracking_guid: action.payload
+        }
       };
     }
     case AuthActions.AuthActionTypes.GetGuidError: {
       return {
         ...state,
-        errors: action.payload
+        errors: action.payload.error
       };
     }
-    case AuthActions.AuthActionTypes.RegisterRedirect: {
+    case AuthActions.AuthActionTypes.Register: {
       return {
         ...state,
         customer: action.payload
       };
     }
+    case AuthActions.AuthActionTypes.RegisterRedirect: {
+      return {
+        ...state,
+        customer: {
+          id: action.payload.id
+        }
+      };
+    }
     case AuthActions.AuthActionTypes.RegisterFailure: {
       return {
         ...state,
-        errors: action.payload
+        errors: action.payload.error
+      };
+    }
+    case AuthActions.AuthActionTypes.GetCustomer: {
+      return {
+        ...state
+      };
+    }
+    case AuthActions.AuthActionTypes.GetCustomerSuccess: {
+      return {
+        ...state,
+        customer: action.payload.customer
+      };
+    }
+    case AuthActions.AuthActionTypes.GetCustomerError: {
+      return {
+        ...state,
+        error: action.payload
       };
     }
     default:
@@ -57,3 +85,4 @@ export function reducer(
 export const getTrackingGuid = (state: State) => state.tracking_guid;
 export const getErrors = (state: State) => state.errors;
 export const getCustomer = (state: State) => state.customer;
+// export const getCustomerId = (state: State) => state.customer.id;

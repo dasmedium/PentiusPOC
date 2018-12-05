@@ -1,13 +1,13 @@
 <div class="container">
   <legend>Start Here</legend>
-  <h4 *ngIf="(customer$.firstName | async) as name">
+  <h4 *ngIf="(customer$.first_name | async) as name">
     {{ name }}'s GUID: {{ tracking_guid$ | async }}
   </h4>
   <form
-    #customerForm="ngForm"
-    (ngSubmit)="formSubmitted(customerForm.value)"
+    #theForm="ngForm"
+    (ngSubmit)="formSubmitted(theForm.value)"
     name="form"
-    id="customerForm"
+    id="theForm"
     novalidate="novalidate"
   >
     <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
@@ -15,16 +15,16 @@
       <input
         type="text"
         class="form-control"
-        name="firstName"
-        id="firstname"
-        #firstName="ngModel"
+        name="first_name"
+        id="first_name"
+        #first_name="ngModel"
         placeholder="First name"
         required
-        [ngModel]="customer$?.firstName"
-        (ngModelChange)="(customer$.firstName)"
+        [ngModel]="customer$?.first_name"
+        (ngModelChange)="(customer$.first_name)"
       />
-      <div *ngIf="(errors$ | async) as error" class="has-error">
-        <div>{{ error.error.firstName }}</div>
+      <div *ngIf="(errors$ | async) as error" class="form-group has-error">
+        <div>{{ error.error.first_name }}</div>
         <div #invisible></div>
       </div>
     </div>
@@ -34,18 +34,18 @@
       <input
         type="text"
         class="form-control"
-        name="lastName"
-        id="lastName"
+        name="last_name"
+        id="last_name"
         #lastName="ngModel"
         placeholder="Last name"
-        [ngModel]="customer$?.lastName"
-        (ngModelChange)="(customer$?.lastName)"
+        [ngModel]="customer$?.last_name"
+        (ngModelChange)="(customer$?.last_name)"
       />
       <div
         class="has-error"
         *ngIf="(errors$ | async) as error; else: invisible"
       >
-        <div>{{ error.error.lastName }}</div>
+        <div>{{ error.error.last_name }}</div>
         <div #invisible></div>
       </div>
     </div>
@@ -150,5 +150,6 @@
         <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
       </button>
     </div>
+    <!-- original content -->
   </form>
 </div>

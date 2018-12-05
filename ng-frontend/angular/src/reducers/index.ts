@@ -14,6 +14,10 @@ export const getCustomer = createSelector(
   selectAuthstate,
   fromAuth.getCustomer
 );
+// export const getCustomerId = createSelector(
+//   selectAuthstate,
+//   fromAuth.getCustomerId
+// );
 
 export interface State {
   auth: fromAuth.State;

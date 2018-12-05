@@ -1,7 +1,7 @@
 export interface Customer {
   id?: number | null;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   zipCode: number;
   tracking_guid?: string;
@@ -28,10 +28,9 @@ export function isCustomer(value: any): value is Customer {
   return (
     value &&
     typeof value.id === "number" &&
-    typeof value.firstName === "string" &&
-    typeof value.lastName === "string" &&
+    typeof value.first_name === "string" &&
+    typeof value.last_name === "string" &&
     typeof value.email === "string" &&
-    typeof value.ziCode === "number" &&
-    typeof value.guid === "string"
+    typeof value.zipCode === "number"
   );
 }

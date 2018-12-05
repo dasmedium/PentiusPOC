@@ -1,13 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { InitActions } from "../../../actions/index";
+
 import { Store, select, State } from "@ngrx/store";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import * as fromStore from "../../../reducers/index";
-import { Customer } from "src/customer/models/customer";
-import { AuthActions } from "../../../actions/index";
-import { ApiService } from "../../services/api.service";
-import isEmpty from "../../../validation/isEmpty";
+import { v4, v4String } from "uuid/interfaces";
+import { async } from "@angular/core/testing";
 
 @Component({
   selector: "app-home",
@@ -15,15 +13,15 @@ import isEmpty from "../../../validation/isEmpty";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-  tracking_guid$: Observable<string>;
+  tracking_guid$: string;
 
-  constructor(private store: Store<fromStore.State>, private router: Router) {
-    this.tracking_guid$ = store.select(fromStore.getTrackingGuid);
-  }
+  constructor(private store: Store<fromStore.State>, private router: Router) {}
 
   ngOnInit() {
-    this.tracking_guid$.subscribe(async (cookieString: string) => {
-      await localStorage.setItem("tracking_guid", cookieString);
+    this.store.select(fromStore.getTrackingGuid).subscribe(guid => {
+      this.tracking_guid$ = guid;
+
+      localStorage.setItem("tracking_guid", this.tracking_guid$);
     });
   }
 }
