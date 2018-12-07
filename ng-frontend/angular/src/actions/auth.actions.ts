@@ -1,8 +1,8 @@
 import { Action } from "@ngrx/store";
 import { Customer } from "../customer/models/customer";
-import { ApiService } from "../app/services/api.service";
-import { HttpClient } from "@angular/common/http";
-import { async } from "@angular/core/testing";
+import { ApiService, GetCustomerService } from "../app/services/api.service";
+import { FunctionCall } from "@angular/compiler";
+
 export enum AuthActionTypes {
   Register = "[Auth] Register",
   RegisterFailure = "[Auth] Register Failure",
@@ -37,17 +37,19 @@ export class Register implements Action {
 
 export class RegisterRedirect implements Action {
   readonly type = AuthActionTypes.RegisterRedirect;
+
   constructor(public payload: { id: number }) {}
 }
 
 export class RegisterFailure implements Action {
   readonly type = AuthActionTypes.RegisterFailure;
 
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: Error }) {}
 }
 
 export class GetCustomer implements Action {
   readonly type = AuthActionTypes.GetCustomer;
+
   constructor(public payload: { id: number }) {}
 }
 export class GetCustomerSuccess implements Action {

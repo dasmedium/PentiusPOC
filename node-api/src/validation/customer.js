@@ -7,7 +7,7 @@ module.exports = function validateCustomerInput(data) {
   data.last_name = !isEmpty(data.last_name) ? data.last_name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
-  data.zipCode = !isEmpty(data.zipCode) ? data.zipCode : "";
+  data.zip_code = !isEmpty(data.zip_code) ? data.zip_code : "";
 
   // firstName
   const nameRegEx = /[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*/;
@@ -52,18 +52,18 @@ module.exports = function validateCustomerInput(data) {
     errors.password = "Password must be between 8 and 25 characters";
   }
 
-  // zipCode
+  // zip_code
 
-  if (Validator.isEmpty(data.zipCode)) {
-    errors.zipCode = "Zip Code field is required";
+  if (Validator.isEmpty(data.zip_code)) {
+    errors.zip_code = "Zip Code field is required";
   }
-  if (!Validator.isLength(data.zipCode, { min: 2, max: 5 })) {
-    errors.zipCode = "Zip Code must be between 2 and 5 characters";
+  if (!Validator.isLength(data.zip_code, { min: 2, max: 5 })) {
+    errors.zip_code = "Zip Code must be between 2 and 5 characters";
   }
   // In case we only use zip codes in the USA
   // const zipRegEx = /^[0-9]*$/;
-  // if (!zipRegEx.test(data.zipCode)){
-  //   errors.zipCode = "Zip Code must contain numbers only"
+  // if (!zipRegEx.test(data.zip_code)){
+  //   errors.zip_code = "Zip Code must contain numbers only"
   // }
   return {
     errors,

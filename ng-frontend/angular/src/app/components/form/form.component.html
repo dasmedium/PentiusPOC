@@ -1,8 +1,5 @@
 <div class="container">
   <legend>Start Here</legend>
-  <h4 *ngIf="(customer$.first_name | async) as name">
-    {{ name }}'s GUID: {{ tracking_guid$ | async }}
-  </h4>
   <form
     #theForm="ngForm"
     (ngSubmit)="formSubmitted(theForm.value)"
@@ -23,9 +20,12 @@
         [ngModel]="customer$?.first_name"
         (ngModelChange)="(customer$.first_name)"
       />
-      <div *ngIf="(errors$ | async) as error" class="form-group has-error">
-        <div>{{ error.error.first_name }}</div>
-        <div #invisible></div>
+
+      <div
+        *ngIf="(errors$ | async) as error"
+        class="form-group text-danger has-error"
+      >
+        {{ error.first_name }}
       </div>
     </div>
 
@@ -42,11 +42,10 @@
         (ngModelChange)="(customer$?.last_name)"
       />
       <div
-        class="has-error"
-        *ngIf="(errors$ | async) as error; else: invisible"
+        *ngIf="(errors$ | async) as error"
+        class="form-group text-danger has-error"
       >
-        <div>{{ error.error.last_name }}</div>
-        <div #invisible></div>
+        {{ error.last_name }}
       </div>
     </div>
     <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
@@ -62,31 +61,29 @@
         (ngModelChange)="(customer$?.email)"
       />
       <div
-        *ngIf="(errors$ | async) as error; else: invisible"
-        class="has-error"
+        *ngIf="(errors$ | async) as error"
+        class="form-group text-danger has-error"
       >
-        <div>{{ error.error.email }}</div>
-        <div #invisible></div>
+        {{ error.email }}
       </div>
     </div>
     <div [ngClass]="{ 'form-group': true, 'has-error': error_status }">
       <label class="visible-xs">Zip Code:</label>
       <input
         type="text"
-        name="zipCode"
+        name="zip_code"
         class="form-control"
-        id="zipCode"
-        #zipCode="ngModel"
+        id="zip_code"
+        #zip_code="ngModel"
         placeholder="Zip Code"
-        [ngModel]="customer$?.zipCode"
-        (ngModelChange)="(customer$?.zipCode)"
+        [ngModel]="customer$?.zip_code"
+        (ngModelChange)="(customer$?.zip_code)"
       />
       <div
-        *ngIf="(errors$ | async) as error; else: invisible"
-        class="has-error"
+        *ngIf="(errors$ | async) as error"
+        class="form-group text-danger has-error"
       >
-        <div>{{ error.error.zipCode }}</div>
-        <div #invisible></div>
+        {{ error.zip_code }}
       </div>
     </div>
 
@@ -103,11 +100,10 @@
         (ngModelChange)="(customer$?.password)"
       />
       <div
-        *ngIf="(errors$ | async) as error; else: invisible"
-        class="has-error"
+        *ngIf="(errors$ | async) as error"
+        class="form-group text-danger has-error"
       >
-        <div>{{ error.error.password }}</div>
-        <div #invisible></div>
+        {{ error.password }}
       </div>
     </div>
 

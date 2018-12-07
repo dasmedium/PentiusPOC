@@ -14,6 +14,10 @@ export const getCustomer = createSelector(
   selectAuthstate,
   fromAuth.getCustomer
 );
+export const getLoading = createSelector(
+  selectAuthstate,
+  fromAuth.getLoading
+);
 // export const getCustomerId = createSelector(
 //   selectAuthstate,
 //   fromAuth.getCustomerId

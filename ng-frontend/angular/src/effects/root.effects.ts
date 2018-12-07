@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Store } from "@ngrx/store";
-import * as fromStore from "../reducers/index";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Action } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
@@ -13,6 +11,7 @@ import { AuthActionTypes } from "src/actions/auth.actions";
 import { Router } from "@angular/router";
 import { Customer } from "src/customer/models/customer";
 
+// Can check for existing localStorage guid, cookie for user here. Trigger action conditionally
 @Injectable()
 export class InitEffects {
   @Effect()
@@ -49,7 +48,11 @@ export class RegisterEffects {
     )
   );
 
-  constructor(private http: HttpClient, private actions$: Actions) {}
+  constructor(
+    private http: HttpClient,
+    private actions$: Actions,
+    public redirect: GetCustomerService
+  ) {}
 }
 @Injectable()
 export class GetById {
@@ -69,4 +72,17 @@ export class GetById {
   );
 
   constructor(private http: HttpClient, private actions$: Actions) {}
+}
+@Injectable()
+export class Redirect {
+  @Effect({ dispatch: false })
+  redirectOnSuccess = this.actions$.pipe(
+    ofType(AuthActionTypes.RegisterRedirect),
+    map(() => this.redirect.redirectTo(["subscribed"]))
+  );
+
+  constructor(
+    private actions$: Actions,
+    private redirect: GetCustomerService
+  ) {}
 }

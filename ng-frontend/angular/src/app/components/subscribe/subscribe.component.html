@@ -1,1 +1,70 @@
-<app-form></app-form>
+<div class="container">
+  <legend>Sign up confirmation</legend>
+
+  <div>
+    <div class="form-group">
+      <label class="visible-xs">Firstname:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="first_name"
+        id="first_name"
+        placeholder="First name"
+        value="{{name}}"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="visible-xs">Lastname:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="last_name"
+        id="last_name"
+        value="{{last_name}}"
+        placeholder="Last Name"
+      />
+    </div>
+    <div class="form-group">
+      <label class="visible-xs">Email:</label>
+      <input
+        type="text"
+        name="email"
+        class="form-control"
+        id="email"
+        value="{{email}}"
+        placeholder="Email"
+      />
+    </div>
+    <div class="form-group">
+      <label class="visible-xs">Zip Code:</label>
+      <input
+        type="text"
+        name="zipCode"
+        class="form-control"
+        id="zipCode"
+        value="{{zipCode}}"
+        placeholder="Zip Code"
+      />
+    </div>
+
+    <!--
+      The code below is some sort of malformed JSON, which prevents angular from doing its HTTP thing. Figuring out a cleverer way of sending the guid. Commented out in favor of getting error messages from api
+    -->
+    <!--
+      <input
+        type="text"
+        id="guid"
+        name="tracking_guid"
+        [(ngModel)]="tracking_guid$"
+        value="{{tracking_guid$}}"
+        style="display: none;"
+      />
+    -->
+
+    <div class="form-group">
+      <h5>{{ guid }}</h5>
+    </div>
+    <!-- original content -->
+  </div>
+</div>

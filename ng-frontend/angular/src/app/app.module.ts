@@ -5,7 +5,12 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
-import { InitEffects, RegisterEffects, GetById } from "../effects/root.effects";
+import {
+  InitEffects,
+  RegisterEffects,
+  GetById,
+  Redirect
+} from "../effects/root.effects";
 import { reducer } from "../reducers/auth.reducer";
 import { AppComponent } from "./app.component";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -18,7 +23,12 @@ import { ApiService, GetCustomerService } from "./services/api.service";
 const appRoutes: Routes = [
   {
     path: "",
-    component: AppComponent
+    redirectTo: "/home",
+    pathMatch: "full"
+  },
+  {
+    path: "home",
+    component: HomeComponent
   },
   {
     path: "subscribed",
@@ -36,7 +46,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    EffectsModule.forRoot([InitEffects, RegisterEffects, GetById]),
+    EffectsModule.forRoot([InitEffects, RegisterEffects, GetById, Redirect]),
     StoreModule.forRoot({ auth: reducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25 // Retains last 25 states

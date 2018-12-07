@@ -5,14 +5,15 @@ export interface State {
   customer: Customer | null;
   tracking_guid: string;
   errors: object;
+  loading: boolean;
 }
 
 export const initialState: State = {
   customer: null,
   tracking_guid: null,
-  errors: null
+  errors: null,
+  loading: false
 };
-
 export function reducer(
   state = initialState,
   action: AuthActions.AuthActionsUnion
@@ -49,24 +50,29 @@ export function reducer(
         ...state,
         customer: {
           id: action.payload.id
-        }
+        },
+        loading: true
       };
     }
     case AuthActions.AuthActionTypes.RegisterFailure: {
       return {
         ...state,
-        errors: action.payload.error
+
+        errors: action.payload.error,
+        loading: false
       };
     }
     case AuthActions.AuthActionTypes.GetCustomer: {
       return {
-        ...state
+        ...state,
+        loading: true
       };
     }
     case AuthActions.AuthActionTypes.GetCustomerSuccess: {
       return {
         ...state,
-        customer: action.payload.customer
+        customer: action.payload.customer,
+        loading: false
       };
     }
     case AuthActions.AuthActionTypes.GetCustomerError: {
@@ -85,4 +91,5 @@ export function reducer(
 export const getTrackingGuid = (state: State) => state.tracking_guid;
 export const getErrors = (state: State) => state.errors;
 export const getCustomer = (state: State) => state.customer;
+export const getLoading = (state: State) => state.loading;
 // export const getCustomerId = (state: State) => state.customer.id;

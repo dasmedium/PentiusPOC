@@ -3,7 +3,7 @@ export interface Customer {
   first_name: string;
   last_name: string;
   email: string;
-  zipCode: number;
+  zip_code: number;
   tracking_guid?: string;
 }
 
@@ -31,6 +31,6 @@ export function isCustomer(value: any): value is Customer {
     typeof value.first_name === "string" &&
     typeof value.last_name === "string" &&
     typeof value.email === "string" &&
-    typeof value.zipCode === "number"
+    typeof value.zip_code === "number"
   );
 }

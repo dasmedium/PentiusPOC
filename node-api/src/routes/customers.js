@@ -15,7 +15,7 @@ router.get("/", async function(req, res, next) {
 
     //res.send('respond with a resource');
   } catch (err) {
-    return res.sendStatus(400).json(err);
+    return res.status(400).json(err);
   }
 });
 // router.post('/', async function(req, res, next){
@@ -46,40 +46,31 @@ router.get("/:Id", async function(req, res, next) {
   try {
     let customerById = await sqlReq.query(getCustomer);
 
-    return res.send(customerById.recordset[0]);
+    res.send(customerById.recordset[0]);
+    return;
   } catch (err) {
-    return res.sendStatus(400).json(err);
-  }
-});
-// Get Customer By GUID
-router.get("/id/:uid", async function(req, res, next) {
-  const sqlReq = await request();
-  const customerGuid = req.params.uid;
-  const parsedUid = uuidParse(customerGuid);
-  const getCustomer = `SELECT id, first_name, last_name, email, tracking_guid FROM customer WHERE tracking_guid=${parsedUid}`;
-  try {
-    let customerById = await sqlReq.query(getCustomer);
-
-    return res.send(customerById.recordset[0]);
-  } catch (err) {
-    return res.sendStatus(400).json(err);
+    res.status(400).json(err);
+    return;
   }
 });
 
 router.post("/add", async function(req, res, next) {
   const sqlReq = await request();
   const { first_name, last_name, email, password, tracking_guid } = req.body;
-  // guid.replace(/^"(.+(?="$))"$/, "$1");
   const { errors, isValid } = validateCustomerInput(req.body);
   if (!isValid) {
-    return res.sendStatus(400).json(errors);
+    res.status(400).json(errors);
   }
   try {
     const checkEmail = `select * from credmo.dbo.customer where email='${email}'`;
-    checked = await sqlReq.query(checkEmail);
+    if (!isValid) {
+      res.status(400).json(errors);
+    }
+    let checked = await sqlReq.query(checkEmail);
     if (checked >= 0) throw Error("Email in use");
   } catch (err) {
-    return res.sendStatus(400).json(err);
+    res.status(400).json(err);
+    return;
   }
 
   const addCustomer = `
@@ -89,13 +80,16 @@ router.post("/add", async function(req, res, next) {
 
   try {
     let newCustomer = await sqlReq.query(addCustomer);
-    res.send(newCustomer.recordset[0]);
+    return res.send(newCustomer.recordset[0]);
   } catch (err) {
     if (err.originalError.info.number == 2627) {
-      res.sendStatus(400).json({ msg: "Credentials already in use" });
+      res.status(400).json({ msg: "Credentials already in use" });
+      return;
     } else if (err.originalError.info.number == 8169) {
-      res.sendStatus(400).json({ msg: "Guid is required" });
-    } else return res.sendStatus(400).json("Bad data");
+      res.status(400).json({ msg: "Guid is required" });
+      return;
+    } else res.status(400).json("Bad data");
+    return;
   }
 });
 

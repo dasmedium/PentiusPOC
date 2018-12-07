@@ -12,13 +12,27 @@ import { GetCustomerService } from "src/app/services/api.service";
   styleUrls: ["./subscribe.component.css"]
 })
 export class SubscribeComponent implements OnInit {
-  customer$: Observable<Customer>;
+  customer: Customer;
+  guid: string;
+  name: string;
+  last_name: string;
+  email: string;
+  zip_code: number;
+
   constructor(
     private store: Store<fromStore.State>,
     public api: GetCustomerService
-  ) {
-    this.customer$ = store.select(fromStore.getCustomer);
-  }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.select(fromStore.getCustomer).subscribe(customer => {
+      this.name = customer.first_name;
+      this.last_name = customer.last_name;
+      this.email = customer.email;
+      this.zip_code = customer.zip_code;
+    });
+    this.store.select(fromStore.getCustomer).subscribe(customer => {
+      this.guid = customer.tracking_guid;
+    });
+  }
 }
