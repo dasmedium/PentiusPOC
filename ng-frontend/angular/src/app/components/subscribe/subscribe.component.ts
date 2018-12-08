@@ -17,6 +17,7 @@ export class SubscribeComponent implements OnInit {
   last_name: string;
   email: string;
   zip_code: number;
+  id: number;
 
   constructor(
     private store: Store<fromStore.State>,
@@ -29,8 +30,7 @@ export class SubscribeComponent implements OnInit {
       this.last_name = customer.last_name;
       this.email = customer.email;
       this.zip_code = customer.zip_code;
-    });
-    this.store.select(fromStore.getCustomer).subscribe(customer => {
+      this.id = customer.id;
       this.guid = customer.tracking_guid;
     });
   }
