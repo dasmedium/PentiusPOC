@@ -26,11 +26,8 @@
     "@ngrx/store": "^6.1.2",
     "@ngrx/store-devtools": "^6.1.2",
     "@types/local-storage": "^1.4.0",
-    "@types/uuid": "^3.4.4",
     "core-js": "^2.5.4",
-    "local-storage": "^1.4.2",
     "rxjs": "^6.0.0",
-    "typesafe-actions": "^2.0.4",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
