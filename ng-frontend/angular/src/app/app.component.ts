@@ -1,8 +1,6 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { InitActions } from "../actions/index";
-import { Store, select, State } from "@ngrx/store";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
 
 import * as fromStore from "../reducers/index";
 

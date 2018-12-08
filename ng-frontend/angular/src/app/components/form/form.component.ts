@@ -1,7 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-import { Store, select, State } from "@ngrx/store";
-import { Router } from "@angular/router";
-import { Observable, from } from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
 import * as fromStore from "../../../reducers/index";
 import { Customer } from "src/customer/models/customer";
 import { AuthActions } from "../../../actions/index";
@@ -22,7 +21,6 @@ export class FormComponent implements OnInit {
 
   constructor(
     private store: Store<fromStore.State>,
-    private router: Router,
     public api: GetCustomerService
   ) {}
 

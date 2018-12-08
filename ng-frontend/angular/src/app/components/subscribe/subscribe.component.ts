@@ -1,9 +1,8 @@
-import { Component, OnInit, DoCheck, AfterViewInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Customer } from "src/customer/models/customer";
-import { Store, select, State } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import * as fromStore from "../../../reducers/index";
-import { Observable } from "rxjs";
-import { AuthActions } from "src/actions";
+
 import { GetCustomerService } from "src/app/services/api.service";
 
 @Component({

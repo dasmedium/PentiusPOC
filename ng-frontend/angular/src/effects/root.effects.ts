@@ -1,15 +1,12 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Action } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Observable, of } from "rxjs";
 import { GetCustomerService } from "../app/services/api.service";
-import { switchMap, take } from "rxjs/operators";
-import { catchError, map, mergeMap, takeUntil } from "rxjs/operators";
+import { catchError, map, mergeMap } from "rxjs/operators";
 import { AuthActions } from "src/actions";
 import { AuthActionTypes } from "src/actions/auth.actions";
-import { Router } from "@angular/router";
-import { Customer } from "src/customer/models/customer";
 
 // Can check for existing localStorage guid, cookie for user here. Trigger action conditionally
 @Injectable()

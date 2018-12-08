@@ -1,11 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-
-import { Store, select, State } from "@ngrx/store";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
 import * as fromStore from "../../../reducers/index";
-import { v4, v4String } from "uuid/interfaces";
-import { async } from "@angular/core/testing";
 
 @Component({
   selector: "app-home",
@@ -15,7 +10,7 @@ import { async } from "@angular/core/testing";
 export class HomeComponent implements OnInit {
   tracking_guid$: string;
 
-  constructor(private store: Store<fromStore.State>, private router: Router) {}
+  constructor(private store: Store<fromStore.State>) {}
 
   ngOnInit() {
     this.store.select(fromStore.getTrackingGuid).subscribe(guid => {
